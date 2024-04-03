@@ -1,0 +1,4 @@
+# dnf install -y gcc libvirt-devel python3-devel ipmitool
+# ipmitool -H localhost -I lanplus -p 623 -U admin -P password
+virtualbmc
+sushy-tools
