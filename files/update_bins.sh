@@ -35,7 +35,7 @@ download_list(){
   LIST=${2}
   OUTPUT=${3}
 
-  [ ! -d "${OUTPUT}" ] && mkdir "${OUTPUT}"
+  [ ! -d "${OUTPUT}" ] && mkdir -p "${OUTPUT}"
 
   pushd "${OUTPUT}"
   for bin in ${LIST}
@@ -136,20 +136,27 @@ download_rhcos(){
 download_fedora(){
   VERSION=${1:-39}
   FOLDER="local/fedora/${VERSION}"
-  [ ! -d "${FOLDER}" ] && mkdir -p "${FOLDER}"
 
   BASE_URL="https://download.fedoraproject.org/pub/fedora/linux/releases/${VERSION}"
-  URL="${BASE_URL}/Server/x86_64/os/images/pxeboot"
 
+  URL="${BASE_URL}/Server/x86_64/os/images/pxeboot"
+  OUTPUT="${FOLDER}/Server/x86_64/os/images/pxeboot"
   LIST="vmlinuz initrd.img"
-  OUTPUT="${FOLDER}"
 
   download_list "${URL}" "${LIST}" "${OUTPUT}"
 
   URL="${BASE_URL}/Server/x86_64/os/images"
+  OUTPUT="${FOLDER}/Server/x86_64/os/images"
   LIST="efiboot.img eltorito.img install.img"
 
-  download_list "${URL}" "${LIST}" "${OUTPUT}/images"
+  download_list "${URL}" "${LIST}" "${OUTPUT}"
+
+  URL="${BASE_URL}/Server/x86_64"
+  OUTPUT="${FOLDER}/Server/x86_64/os"
+
+  # lftp -e "mirror -R ${OUTPUT} fedora/linux/releases/39/Server/x86_64/os" https://southfront.mm.fcix.net
+  # curl -sL "${URL}/.treeinfo" -o "${OUTPUT}"
+
 
 }
 
