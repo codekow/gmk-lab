@@ -1,0 +1,10 @@
+<pool type="logical">
+  <name>vmdata</name>
+  <source>
+    <name>vmdata</name>
+    <format type="lvm2"/>
+  </source>
+  <target>
+    <path>/dev/vmdata</path>
+  </target>
+</pool>
