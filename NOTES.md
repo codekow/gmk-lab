@@ -2,7 +2,7 @@
 
 NVMe
 
-```
+```sh
 # check for 4kn advanced format ability
 sudo nvme id-ns -H /dev/nvme0n1
 # change lba format
@@ -11,7 +11,7 @@ sudo nvme format --lbaf=1 /dev/nvme0n1 --format
 
 Bridge Setup
 
-```
+```sh
 bridge_config(){
   NIC=$(ls /sys/class/net/enp?s0)
   nmcli con add ifname br0 type bridge con-name br0
