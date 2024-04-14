@@ -13,6 +13,7 @@ A place to explore GMK hardware in a home lab
 
 - [Emulated Bare Metal w/ VMs](https://github.com/amedeos/ocp4-in-the-jars)
 - [Sushy Tools](https://docs.openstack.org/sushy-tools/latest/admin/)
-  - [More VBMC Notes](https://jgato.github.io/jgato/posts/redfish-sushy/)
+  - [More Notes](https://jgato.github.io/jgato/posts/redfish-sushy/)
+  - [More Notes](https://gist.github.com/williamcaban/e5d02b3b7a93b497459c94446105872c)
 - [Virtual BMC](https://docs.openstack.org/virtualbmc/latest/user/index.html)
-  - [More VBMC Notes](https://www.cloudnull.io/2019/05/vbmc/)
+  - [More Notes](https://www.cloudnull.io/2019/05/vbmc/)
