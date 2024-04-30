@@ -1,5 +1,5 @@
 <domain type="kvm">
-  <name>nvm-03</name>
+  <name>nvm-01</name>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://fedoraproject.org/coreos/stable"/>
@@ -19,7 +19,7 @@
       <feature enabled="yes" name="secure-boot"/>
     </firmware>
     <loader readonly="yes" secure="yes" type="pflash" format="qcow2">/usr/share/edk2/ovmf/OVMF_CODE_4M.secboot.qcow2</loader>
-    <nvram template="/usr/share/edk2/ovmf/OVMF_VARS_4M.secboot.qcow2" format="qcow2">/var/lib/libvirt/qemu/nvram/nvm-03_VARS.qcow2</nvram>
+    <nvram template="/usr/share/edk2/ovmf/OVMF_VARS_4M.secboot.qcow2" format="qcow2">/var/lib/libvirt/qemu/nvram/nvm-01_VARS.qcow2</nvram>
     <bootmenu enable="yes"/>
   </os>
   <features>
@@ -45,7 +45,7 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type="block" device="disk">
       <driver name="qemu" type="raw" cache="none" io="native" discard="unmap"/>
-      <source dev="/dev/vmdata/nvm-03-sda"/>
+      <source dev="/dev/vmdata/nvm-00-sda"/>
       <target dev="sda" bus="sata"/>
       <boot order="2"/>
       <address type="drive" controller="0" bus="0" target="0" unit="0"/>
@@ -141,7 +141,7 @@
       <address type="pci" domain="0x0000" bus="0x04" slot="0x00" function="0x0"/>
     </controller>
     <interface type="bridge">
-      <mac address="52:54:00:4e:e0:06"/>
+      <mac address="52:54:00:4e:e0:00"/>
       <source bridge="br0"/>
       <model type="virtio"/>
       <boot order="3"/>
