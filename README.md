@@ -11,9 +11,13 @@ A place to explore GMK hardware in a home lab
 
 ## Links of interest
 
+- [4KN Format NVME](https://carlosfelic.io/misc/how-to-switch-your-nvme-ssd-to-4kn-advanced-format/)
+- [TPM Notes](https://tpm2-software.github.io/2020/06/12/Remote-Attestation-With-tpm2-tools.html)
 - [Emulated Bare Metal w/ VMs](https://github.com/amedeos/ocp4-in-the-jars)
 - [Sushy Tools](https://docs.openstack.org/sushy-tools/latest/admin/)
   - [More Notes](https://jgato.github.io/jgato/posts/redfish-sushy/)
   - [More Notes](https://gist.github.com/williamcaban/e5d02b3b7a93b497459c94446105872c)
+  - [More Note](https://cloudcult.dev/sushy-emulator-redfish-for-the-virtualization-nation/)
 - [Virtual BMC](https://docs.openstack.org/virtualbmc/latest/user/index.html)
   - [More Notes](https://www.cloudnull.io/2019/05/vbmc/)
+- [GPU Passthrough](https://github.com/martinopiaggi/Single-GPU-Passthrough-for-Dummies)
