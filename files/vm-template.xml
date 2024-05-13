@@ -45,7 +45,7 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type="block" device="disk">
       <driver name="qemu" type="raw" cache="none" io="native" discard="unmap"/>
-      <source dev="/dev/vmdata/nvm-00-sda"/>
+      <source dev="/dev/vmdata/vm-00-sda"/>
       <target dev="sda" bus="sata"/>
       <boot order="2"/>
       <address type="drive" controller="0" bus="0" target="0" unit="0"/>
