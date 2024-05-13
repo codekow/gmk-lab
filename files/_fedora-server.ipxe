@@ -1,6 +1,7 @@
 #!ipxe
 
-set os Fedora 39 Server
+set os_ver 40
+set os Fedora Server - ${os_ver}
 
 set base-http http://${next-server}/tftpboot
 set base-tftp tftp://${next-server}
@@ -13,9 +14,9 @@ echo Install - ${os}
 echo Starting in 10 seconds...
 sleep 10
 
-set os_path local/fedora/39/Server/x86_64/os
-set ks_url ${base-url}/install/ks/ks-fedora.cfg
-set fedora_mirror https://download.fedoraproject.org/pub/fedora/linux/releases/39/Server/x86_64/os
+set os_path local/fedora/${os_ver}/Server/x86_64/os
+set ks_url ${base-url}/install/ks/ks-fedora-server.cfg
+set fedora_mirror https://download.fedoraproject.org/pub/fedora/linux/releases/${os_ver}/Server/x86_64/os
 set local_mirror ${base-url}/${os_path}
 
 set params ip=dhcp inst.text
