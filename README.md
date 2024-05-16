@@ -25,3 +25,5 @@ A place to explore GMK hardware in a home lab
 - [Libvirt Network](https://libvirt.org/formatnetwork.html)
 - [Libvirt Docs](https://libvirt.org/docs.html)
 - [FCOS Ignition](https://github.com/project-faros/cluster-manager/blob/master/app/roles/openshift-installer/templates/98-cache-disk.yaml.j2)
+  - [More FCOS Ignition](https://coreos.github.io/ignition/getting-started)
+- [Fedora Docs](https://docs.fedoraproject.org/en-US/fedora-coreos/live-booting)
