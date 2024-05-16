@@ -1,12 +1,24 @@
 #!/bin/bash
 
 lab_wol(){
-  MACS=(F4:4D:30:6E:95:78 E0:51:D8:12:CF:1B E0:51:D8:12:D2:1A E0:51:D8:12:D7:B5 58:47:CA:75:3C:F3)
+  # MACS=()
 
   for nic in ${MACS[*]}
   do
     wol $nic
   done
+}
+
+create_vm(){
+  VM_NAME=${1:-00}
+  VM_MAC=${2:-00}
+  VM_FILE=files/etc/libvirt/qemu/vm-00.xml
+
+  sed '
+      s/vm-00/'"${VM_NAME}"/g'
+      s/52:54:00:4e:e0:00/52:54:00:4e:e0:'"${VM_MAC}"/g'
+      ' "${VM_FILE}"
+
 }
 
 download_fcos(){
