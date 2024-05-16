@@ -21,3 +21,6 @@ A place to explore GMK hardware in a home lab
 - [Virtual BMC](https://docs.openstack.org/virtualbmc/latest/user/index.html)
   - [More Notes](https://www.cloudnull.io/2019/05/vbmc/)
 - [GPU Passthrough](https://github.com/martinopiaggi/Single-GPU-Passthrough-for-Dummies)
+- [Libvirt ArchLinux](https://wiki.archlinux.org/title/Libvirt#Server)
+- [Libvirt Network](https://libvirt.org/formatnetwork.html)
+- [Libvirt Docs](https://libvirt.org/docs.html)
