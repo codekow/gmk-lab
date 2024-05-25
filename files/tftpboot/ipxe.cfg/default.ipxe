@@ -77,14 +77,14 @@ echo -n IP: && read net${net}/ip
 echo -n Subnet mask: && read net${net}/netmask
 echo -n Gateway: && read net${net}/gateway
 echo -n DNS: && read dns
-ifopen net${net}     
-goto start           
-          
+ifopen net${net}
+goto start
+
 :netboot
 chain --autofree http://boot.netboot.xyz || goto failed
 
 :memtest
-chain ${base-url}/local/memtest/memtest64.efi || goto failed
+chain memtest64.ipxe
 
-:ks-fedora                  
+:ks-fedora
 chain ks-fedora.ipxe || goto failed

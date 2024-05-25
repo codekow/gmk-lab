@@ -1,0 +1,3 @@
+#!ipxe
+
+chain ${base-url}/local/memtest/memtest64.efi || goto failed
