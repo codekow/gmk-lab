@@ -1,13 +1,13 @@
 #!ipxe
 
-isset ${check_done} && goto abort ||
-
 :version_check
 set latest_version 1.21.1+ (g09e8)
-set check_done yes
+set alt_version 1.21.1+ (gdc118)
 
 echo ${cls}
 iseq ${version} ${latest_version} && goto abort ||
+iseq ${version} ${alt_version} && goto abort ||
+
 echo
 echo Updated version of iPXE is available:
 echo
