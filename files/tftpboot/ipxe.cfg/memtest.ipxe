@@ -1,0 +1,5 @@
+!ipxe
+
+:boot
+kernel ${base-url}/local/memtest/memtest64.efi || goto failed
+boot

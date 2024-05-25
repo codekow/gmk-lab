@@ -29,6 +29,7 @@ item exit Local HD
 item netboot netboot.xyz
 item --gap -- -----------
 item ks-fedora Kickstart Fedora
+item memtest Memtest
 item debug iPXE Shell
 item --gap -- -----------
 item reboot Reboot System
@@ -81,6 +82,9 @@ goto start
           
 :netboot
 chain --autofree http://boot.netboot.xyz || goto failed
-                           
+
+:memtest
+chain memtest.ipxe
+
 :ks-fedora                  
 chain ks-fedora.ipxe || goto failed
