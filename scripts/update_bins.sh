@@ -23,13 +23,6 @@ else
 fi
 }
 
-download_to_name(){
-  URL=${1}
-  OUTPUT=${2}
-
-  wget -N "${URL}" -O "${OUTPUT}"
-}
-
 download_list(){
   URL=${1}
   LIST=${2}
@@ -54,17 +47,6 @@ download_ipxe(){
   download_list "${URL}" "${LIST}" "${OUTPUT}"
 }
 
-download_netboot(){
-  FOLDER='local/netboot'
-  [ ! -d "${FOLDER}" ] && mkdir -p "${FOLDER}"
-
-  URL="https://boot.netboot.xyz/ipxe"
-  LIST="$(echo netboot.xyz.{iso,img,dsk,pdsk,lkrn,kpxe,efi} netboot.xyz-{snp,snponly}.efi) netboot.xyz-efi.iso netboot.xyz-undionly.kpxe"
-  OUTPUT=local/netboot
-
-  download_list "${URL}" "${LIST}" "${OUTPUT}"
-}
-
 download_wimboot(){
   FOLDER='ipxe'
   [ ! -d "${FOLDER}" ] && mkdir -p "${FOLDER}"
@@ -75,105 +57,23 @@ download_wimboot(){
   download "${URL}" "${OUTPUT}"
 }
 
-download_freedos(){
-  FOLDER='local/freedos'
+download_memtest(){
+  FOLDER='local/memtest'
   [ ! -d "${FOLDER}" ] && mkdir -p "${FOLDER}"
 
-  pushd "${FOLDER}"
-    download "https://www.ibiblio.org/pub/micro/pc-stuff/freedos/files/distributions/1.3/official/FD13-FloppyEdition.zip"
-    unzip -u FD13-FloppyEdition.zip
-    rm FD13-FloppyEdition.zip
-    mv 144m/x86BOOT.img .
-    rm -rf 720k 120m 144m
+    cd "${FOLDER}"
 
-    download "https://www.ibiblio.org/pub/micro/pc-stuff/freedos/files/distributions/1.3/official/FD13-LiteUSB.zip"
-    unzip -u FD13-LiteUSB.zip
-    rm FD13-LiteUSB.zip
-    rm *.vmdk
-  popd
+    download "https://memtest.org/download/v7.00/mt86plus_7.00.binaries.zip"
+    unzip -u mt86plus_*.zip
+    rm mt86plus_*.zip
+
+    cd ../..
 }
 
-download_misc(){
-  FOLDER='local/misc'
-  [ ! -d "${FOLDER}" ] && mkdir -p "${FOLDER}"
-
-  pushd "${FOLDER}"
-    download "https://www.memtest.org/download/v6.00/mt86plus_6.00_64.iso.zip"
-    unzip -u mt86plus_6.00_64.iso.zip
-    rm mt86plus_6.00_64.iso.zip
-  popd
-}
-
-download_coreos(){
-  FOLDER='local/coreos'
-  [ ! -d "${FOLDER}" ] && mkdir -p "${FOLDER}"
-
-  pushd "${FOLDER}"
-    version='36.20221030.3.0'
-    curl -L --remote-name-all https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/${version}/x86_64/fedora-coreos-${version}-{live-initramfs.x86_64.img,live-kernel-x86_64,live-rootfs.x86_64.img,live.x86_64.iso}
-  popd
-}
-
-download_rhcos(){
-  FOLDER='local/rhcos'
-  [ ! -d "${FOLDER}" ] && mkdir -p "${FOLDER}"
-
-  URL="https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest"
-  # URL="https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.9/latest"
-
-  LIST="sha256sum.txt rhcos-installer-kernel-x86_64 rhcos-installer-initramfs.x86_64.img rhcos-installer-rootfs.x86_64.img"
-  OUTPUT="${FOLDER}"
-
-  download_list "${URL}" "${LIST}" "${OUTPUT}"
-
-  pushd "${FOLDER}"
-      sha256sum --ignore-missing -c sha256sum.txt
-  popd
-}
-
-download_fedora(){
-  VERSION=${1:-39}
-  FOLDER="local/fedora/${VERSION}"
-
-  BASE_URL="https://download.fedoraproject.org/pub/fedora/linux/releases/${VERSION}"
-
-  URL="${BASE_URL}/Server/x86_64/os/images/pxeboot"
-  OUTPUT="${FOLDER}/Server/x86_64/os/images/pxeboot"
-  LIST="vmlinuz initrd.img"
-
-  download_list "${URL}" "${LIST}" "${OUTPUT}"
-
-  URL="${BASE_URL}/Server/x86_64/os/images"
-  OUTPUT="${FOLDER}/Server/x86_64/os/images"
-  LIST="efiboot.img eltorito.img install.img"
-
-  download_list "${URL}" "${LIST}" "${OUTPUT}"
-
-  URL="${BASE_URL}/Server/x86_64"
-  OUTPUT="${FOLDER}/Server/x86_64/os"
-
-  # lftp -e "mirror -R ${OUTPUT} fedora/linux/releases/39/Server/x86_64/os" https://southfront.mm.fcix.net
-  # curl -sL "${URL}/.treeinfo" -o "${OUTPUT}"
-
-
-}
-
-download_fedora_live(){
-  FOLDER='local/fedora/37'
-  [ ! -d "${FOLDER}" ] && mkdir -p "${FOLDER}"
-
-  URL="https://github.com/netbootxyz/fedora-assets/releases/download/1.7-b9ac9551/"
-
-  LIST="vmlinuz initrd squashfs.img"
-  OUTPUT="${FOLDER}"
-
-  download_list "${URL}" "${LIST}" "${OUTPUT}"
-}
-
-download_fedora_server(){
-  OS_VER=40
+download_fedora_ks(){
+  OS_VER=${1:-40}
+  OS_TYPE=${2:-Server}
   FOLDER="local/fedora/${OS_VER}/Server/x86_64/os/images"
-
 
   [ ! -d "${FOLDER}" ] && mkdir -p "${FOLDER}/pxeboot"
 
@@ -183,29 +83,47 @@ download_fedora_server(){
   OUTPUT="${FOLDER}"
 
   download_list "${URL}" "${LIST}" "${OUTPUT}"
+
 }
 
-download_ubutu_live(){
-  FOLDER='local/ubuntu/22.04'
+download_fedora_repo(){
+  OS_VER=${1:-40}
+  OS_TYPE=${2:-Server}
+  # URL="https://download.fedoraproject.org/pub/fedora/linux/releases/${OS_VER}/Server/x86_64/os/"
+  URL="https://mirror.arizona.edu/fedora/linux/releases/${OS_VER}/${OS_TYPE}/x86_64/os/"
+  FOLDER="local/fedora/${OS_VER}/${OS_TYPE}/x86_64/os"
+
   [ ! -d "${FOLDER}" ] && mkdir -p "${FOLDER}"
 
-  URL="https://github.com/netbootxyz/ubuntu-squash/releases/download/22.04.1-54de5f62/"
+  cd "${FOLDER}"
+  wget -e robots=off -m -nH -N -r --cut-dirs=8 -np -R "index.html*" "${URL}"
+  cd ../../../../../../
 
-  LIST="vmlinuz initrd filesystem.squashfs"
-  OUTPUT="${FOLDER}"
-
-  download_list "${URL}" "${LIST}" "${OUTPUT}"
+  # lftp -e "mirror -R ${OUTPUT} fedora/linux/releases/39/Server/x86_64/os" https://southfront.mm.fcix.net
+  # curl -sL "${URL}/.treeinfo" -o "${OUTPUT}"
 }
 
+download_fedora_server_iso(){
+  OS_VER=${1:-40}
+
+  FOLDER="local/fedora/${OS_VER}/Server/x86_64"
+  [ ! -d "${FOLDER}" ] && mkdir -p "${FOLDER}"/{iso,os}
+  download "https://download.fedoraproject.org/pub/fedora/linux/releases/${OS_VER}/Server/x86_64/iso/Fedora-Server-dvd-x86_64-40-1.14.iso" "${FOLDER}/iso/Fedora-Server-dvd-x86_64-40-1.14.iso"
+
+  # FOLDER="local/fedora/${OS_VER}/Everything/x86_64/"
+  # [ ! -d "${FOLDER}" ] && mkdir -p "${FOLDER}"/{iso,os}
+  # download "https://download.fedoraproject.org/pub/fedora/linux/releases/${OS_VER}/Everything/x86_64/iso/Fedora-Everything-netinst-x86_64-40-1.14.iso" "${FOLDER}/iso/Fedora-Everything-netinst-x86_64-40-1.14.iso"
+
+}
 
 main() {
   init
   download_ipxe
-  download_netboot
   download_wimboot
-  download_coreos
-  download_fedora_live
-  download_misc
+  download_memtest
+  download_fedora_ks
+  download_fedora_server_iso
+  # download_fedora_repo
 }
 
-# main
+main
