@@ -84,7 +84,7 @@ goto start
 chain --autofree http://boot.netboot.xyz || goto failed
 
 :memtest
-chain memtest64.ipxe
+chain memtest.ipxe
 
 :ks-fedora
 chain ks-fedora.ipxe || goto failed
