@@ -1,12 +1,9 @@
 #!ipxe
 
 :version_check
-set latest_version 1.21.1+ (g09e8)
-set alt_version 1.21.1+ (gdc118)
+set latest_version 1.21.1+ (gdc118)
 
 echo ${cls}
-iseq ${version} ${latest_version} && goto abort ||
-iseq ${version} ${alt_version} && goto abort ||
 
 echo
 echo Updated version of iPXE is available:
@@ -15,6 +12,9 @@ echo Running version.... ${version}
 echo Updated version.... ${latest_version}
 echo Platform........... ${platform}
 echo
+
+iseq ${version} ${latest_version} && goto abort ||
+
 echo Attempting to chain to latest version...
 
 iseq ${platform} efi && goto efi_boot || goto pcbios_boot
