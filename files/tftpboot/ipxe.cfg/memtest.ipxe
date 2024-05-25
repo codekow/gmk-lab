@@ -1,5 +1,4 @@
 !ipxe
 
 :boot
-kernel ${base-url}/local/memtest/memtest64.efi || goto failed
-boot
+chain ${base-url}/tftpboot/local/memtest/memtest64.efi || goto failed

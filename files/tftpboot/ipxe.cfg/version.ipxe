@@ -4,17 +4,15 @@
 set latest_version 1.21.1+ (gdc118)
 
 echo ${cls}
-
-echo
-echo Updated version of iPXE is available:
-echo
 echo Running version.... ${version}
-echo Updated version.... ${latest_version}
 echo Platform........... ${platform}
 echo
 
 iseq ${version} ${latest_version} && goto abort ||
 
+echo Updated version of iPXE is available:
+echo Updated version.... ${latest_version}
+echo
 echo Attempting to chain to latest version...
 
 iseq ${platform} efi && goto efi_boot || goto pcbios_boot
