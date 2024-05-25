@@ -37,12 +37,10 @@ download_list(){
 
   [ ! -d "${OUTPUT}" ] && mkdir -p "${OUTPUT}"
 
-  pushd "${OUTPUT}"
   for bin in ${LIST}
   do
-    download "${URL}/${bin}"
+    download "${URL}/${bin}" "${OUTPUT}/${bin}"
   done
-  popd
 }
 
 download_ipxe(){
@@ -167,6 +165,21 @@ download_fedora_live(){
   URL="https://github.com/netbootxyz/fedora-assets/releases/download/1.7-b9ac9551/"
 
   LIST="vmlinuz initrd squashfs.img"
+  OUTPUT="${FOLDER}"
+
+  download_list "${URL}" "${LIST}" "${OUTPUT}"
+}
+
+download_fedora_server(){
+  OS_VER=40
+  FOLDER="local/fedora/${OS_VER}/Server/x86_64/os/images"
+
+
+  [ ! -d "${FOLDER}" ] && mkdir -p "${FOLDER}/pxeboot"
+
+  URL="https://download.fedoraproject.org/pub/fedora/linux/releases/${OS_VER}/Server/x86_64/os/images"
+
+  LIST="pxeboot/vmlinuz pxeboot/initrd.img install.img"
   OUTPUT="${FOLDER}"
 
   download_list "${URL}" "${LIST}" "${OUTPUT}"
