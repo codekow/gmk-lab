@@ -1,0 +1,29 @@
+#!ipxe
+
+isset ${check_done} && goto abort ||
+
+:version_check
+set latest_version 1.21.1+ (g09e8)
+echo ${cls}
+iseq ${version} ${latest_version} && goto abort ||
+echo
+echo Updated version of iPXE is available:
+echo
+echo Running version.... ${version}
+echo Updated version.... ${latest_version}
+echo Platform........... ${platform}
+echo
+echo Attempting to chain to latest version...
+
+iseq ${platform} efi && goto efi_boot || goto pcbios_boot
+
+: pcbios_boot
+chain --autofree ${boot-url}/ipxe/ipxe.lkrn || abort
+
+:efi_boot
+chain --autofree ${boot-url}/ipxe/ipxe.efi || abort
+
+:abort
+echo iPXE version check complete
+set check_done yes
+sleep 3
