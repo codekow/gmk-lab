@@ -1,4 +1,0 @@
-!ipxe
-
-:boot
-chain ${base-url}/tftpboot/local/memtest/memtest64.efi || goto failed
