@@ -4,6 +4,8 @@ isset ${check_done} && goto abort ||
 
 :version_check
 set latest_version 1.21.1+ (g09e8)
+set check_done yes
+
 echo ${cls}
 iseq ${version} ${latest_version} && goto abort ||
 echo
@@ -25,5 +27,4 @@ chain --autofree ${boot-url}/ipxe/ipxe.efi || abort
 
 :abort
 echo iPXE version check complete
-set check_done yes
 sleep 3
